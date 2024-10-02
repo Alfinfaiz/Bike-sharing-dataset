@@ -116,7 +116,7 @@ max_date = all_df["dteday"].max()
  
 with st.sidebar:
     # Menambahkan logo perusahaan
-    st.image("https://github.com/dicodingacademy/assets/raw/main/logo.png")
+    st.image("https://github.com/Alfinfaiz/Bike-sharing-dataset/blob/main/istockphoto-979064894-170667a.jpg?raw=true")
     
     # Mengambil start_date & end_date dari date_input menggunakan 'dteday'
     start_date, end_date = st.date_input(
