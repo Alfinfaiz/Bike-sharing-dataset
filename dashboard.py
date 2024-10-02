@@ -3,12 +3,6 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
 
-import streamlit as st
-import pandas as pd
-import matplotlib.pyplot as plt
-import seaborn as sns
-from sklearn.cluster import KMeans
-
 # Load the dataset
 hour_df = pd.read_csv('main_data.csv')
 
@@ -67,22 +61,34 @@ ax.set_xlabel("Month")
 ax.set_ylabel("Bicycle Count")
 st.pyplot(fig)
 
-### 5. What are the patterns of bicycle use throughout the day using the cluster method?
-st.header("5. What are the patterns of bicycle use throughout the day using the cluster method?")
+### 5. What are the patterns of bicycle use throughout the day using manual grouping?
+st.header("5. What are the patterns of bicycle use throughout the day using manual grouping?")
 st.write("""
-To better understand bicycle usage patterns throughout the day, we use a clustering method to group hours based on usage by casual and registered users.
+The manual grouping method is used to understand patterns of bicycle usage throughout the day by segmenting hours based on usage behavior.
 """)
-# Prepare data for clustering
-hour_cluster_data = hour_df[['hr', 'casual', 'registered']]
 
-# Fit the KMeans clustering model
-kmeans = KMeans(n_clusters=3)
-hour_df['cluster'] = kmeans.fit_predict(hour_cluster_data)
+# Assuming manual grouping has already been performed in the EDA, and you've grouped the data into categories
+# You can either have a column for 'group' in hour_df, or define the groupings here manually.
 
-# Visualize the clusters
+# For example, assume you have groups like this (customize based on your manual grouping):
+def manual_grouping(hour):
+    if 0 <= hour <= 6:
+        return 'Late Night'
+    elif 7 <= hour <= 10:
+        return 'Morning Rush'
+    elif 11 <= hour <= 16:
+        return 'Daytime'
+    elif 17 <= hour <= 19:
+        return 'Evening Rush'
+    else:
+        return 'Night'
+
+hour_df['group'] = hour_df['hr'].apply(manual_grouping)
+
+# Visualize the manual grouping
 fig, ax = plt.subplots()
-sns.scatterplot(data=hour_df, x='hr', y='cnt', hue='cluster', palette='Set1', ax=ax)
-ax.set_title("Bicycle Usage Patterns by Clusters")
+sns.scatterplot(data=hour_df, x='hr', y='cnt', hue='group', palette='Set1', ax=ax)
+ax.set_title("Bicycle Usage Patterns by Manual Grouping")
 ax.set_xlabel("Hour")
 ax.set_ylabel("Bicycle Count")
 st.pyplot(fig)
@@ -90,7 +96,7 @@ st.pyplot(fig)
 # Footer
 st.write("""
 ### Conclusion:
-This analysis highlights that weather conditions, weekdays vs. weekends, and user types (casual vs. registered) have a significant impact on bicycle usage. Additionally, using clustering helps identify patterns in bicycle usage throughout the day.
+This analysis highlights that weather conditions, weekdays vs. weekends, and user types (casual vs. registered) have a significant impact on bicycle usage. Additionally, manual grouping helps identify patterns in bicycle usage throughout the day.
 """)
 
 all_df = pd.read_csv("main_data.csv")
