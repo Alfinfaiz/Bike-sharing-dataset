@@ -7,9 +7,9 @@ import seaborn as sns
 hour_df = pd.read_csv('main_data.csv')
 
 # Set the title and description of the project
-st.title("Bicycle Usage Data Analysis: Based on Weather, Days, and User Type")
+st.title("Weather and Seasonal Influences on Bike Sharing: A Study Using the Capital Bikeshare Dataset")
 st.write("""
-This project answers key business questions regarding bicycle usage based on various factors such as weather, weekdays vs. weekends, and user types (casual vs. registered).
+The purpose of this project is to analyze bike rental patterns from the Capital Bikeshare system in Washington D.C. and understand how environmental factors such as weather conditions, temperature, and seasonality affect the number of bicycle users.
 """)
 
 ### 1. How do weather conditions affect bicycle use?
