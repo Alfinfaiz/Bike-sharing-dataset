@@ -15,13 +15,13 @@ This project answers key business questions regarding bicycle usage based on var
 ### 1. How do weather conditions affect bicycle use?
 st.header("1. How do weather conditions affect bicycle use?")
 st.write("""
-Weather is one of the key factors influencing bicycle usage. This visualization shows the relationship between temperature, humidity, wind speed, and bicycle usage.
+Weather is one of the key factors influencing bicycle usage. This boxplot shows the distribution of bicycle usage across different weather conditions.
 """)
 fig, ax = plt.subplots()
-sns.scatterplot(data=hour_df, x='temp', y='cnt', hue='weathersit', ax=ax)
-ax.set_title("Bicycle Usage by Temperature and Weather Conditions")
-ax.set_xlabel("Temperature")
-ax.set_ylabel("Bicycle Count")
+sns.boxplot(data=hour_df, x='weathersit', y='cnt', ax=ax)
+ax.set_title("The Effect of Weather Conditions on Bicycle Use")
+ax.set_xlabel("Weather Conditions")
+ax.set_ylabel("Number of Bicycle Users")
 st.pyplot(fig)
 
 ### 2. How does bicycle use vary between weekdays and weekends?
