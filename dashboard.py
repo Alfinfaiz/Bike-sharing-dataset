@@ -61,7 +61,6 @@ ax.set_xlabel("Month")
 ax.set_ylabel("Number of Bicycle Users")
 st.pyplot(fig)
 
-
 ### 5. What are the patterns of bicycle use throughout the day using manual grouping?
 st.header("5. What are the patterns of bicycle use throughout the day using manual grouping?")
 st.write("""
@@ -75,14 +74,18 @@ def manual_grouping(hour):
     elif 12 <= hour < 18:
         return 'Afternoon'
     else:
-        return 'Night'
+        return 'Evening'
 
 # Apply manual grouping to the dataset
 hour_df['time_of_day'] = hour_df['hr'].apply(manual_grouping)
 
+# Define the specific order for the x-axis
+time_order = ['Afternoon', 'Evening', 'Morning']
+
 # Visualize the manual grouping with a bar plot
 fig, ax = plt.subplots(figsize=(7, 5))  # Set figure size to match the provided plot
-sns.barplot(x='time_of_day', y='cnt', data=hour_df, estimator=sum, ci=None, ax=ax, color="lightblue")  # Set the color to light blue
+sns.barplot(x='time_of_day', y='cnt', data=hour_df, estimator=sum, ci=None, ax=ax, color="lightblue", order=time_order)  # Set the specific order and color
+
 ax.set_title("Bicycle Usage Based on Time of Day", fontsize=14)
 ax.set_xlabel("Time of Day", fontsize=12)
 ax.set_ylabel("Number of Bicycle Users", fontsize=12)
@@ -95,8 +98,6 @@ ax.ticklabel_format(style='sci', axis='y', scilimits=(6,6))
 
 # Display the plot
 st.pyplot(fig)
-
-
 
 # Footer
 st.write("""
