@@ -27,13 +27,13 @@ st.pyplot(fig)
 ### 2. How does bicycle use vary between weekdays and weekends?
 st.header("2. How does bicycle use vary between weekdays and weekends?")
 st.write("""
-There is a significant difference in bicycle usage between weekdays and weekends. Weekdays typically see higher usage from registered users, while weekends attract more casual users.
+This bar plot shows the average number of bicycle users on weekdays compared to weekends. Weekdays are labeled as 1, and weekends as 0.
 """)
 fig, ax = plt.subplots()
-sns.boxplot(data=hour_df, x='weekday', y='cnt', ax=ax)
-ax.set_title("Distribution of Bicycle Usage: Weekdays vs Weekends")
-ax.set_xlabel("Day of the Week (0 = Sunday, 6 = Saturday)")
-ax.set_ylabel("Bicycle Count")
+sns.barplot(x='workingday', y='cnt', data=hour_df, ci=None, ax=ax)
+ax.set_title("Bicycle Use Between Weekdays and Weekends")
+ax.set_xlabel("Weekdays (1) vs Weekends (0)")
+ax.set_ylabel("Number of Bicycle Users")
 st.pyplot(fig)
 
 ### 3. How does the behavior of casual and registered users differ?
