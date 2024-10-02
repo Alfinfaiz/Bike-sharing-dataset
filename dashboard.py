@@ -100,10 +100,33 @@ ax.ticklabel_format(style='sci', axis='y', scilimits=(6,6))
 st.pyplot(fig)
 
 # Footer
-st.write("""
-### Conclusion:
-This analysis highlights that weather conditions, weekdays vs. weekends, and user types (casual vs. registered) have a significant impact on bicycle usage. Additionally, manual grouping helps identify patterns in bicycle usage throughout the day.
-""")
+st.header("Conclusion")
+
+conclusions = """
+- **Question 1: How do weather conditions affect bicycle use?**  
+  The analysis results show that weather conditions significantly impact the number of bicycle users. The highest usage is recorded during clear weather and light mist, while usage drastically decreases during light to heavy rain. This highlights that good weather encourages more people to use bicycles.
+
+- **Question 2: How does bicycle use vary between weekdays and weekends?**  
+  The analysis indicates a significant difference between bicycle usage on workdays and weekends. Usage tends to be higher on workdays compared to weekends, likely due to more registered users using bicycles for their regular commutes.
+
+- **Question 3: How does the behavior of casual and registered users differ?**  
+  Registered users demonstrate a more consistent usage pattern throughout the day compared to casual users. Casual users tend to use bicycles during specific times, particularly on weekends, suggesting that they prefer using bicycles for recreational purposes.
+
+- **Question 4: What are the trends in bicycle use throughout the year?**  
+  Monthly trend analysis shows fluctuations in bicycle usage throughout the year, with peaks occurring in specific months such as May and September. Conversely, lower usage is observed in January and February, likely due to colder weather conditions during those months. This indicates that weather factors influence users' preferences for cycling.
+
+- **Question 5: What are the patterns of bicycle use throughout the day?**  
+  1. **Bicycle Usage Patterns Throughout the Day**:  
+     The visualization indicates that bicycle usage varies significantly throughout the day. The "Morning" category (from 6:00 AM to 11:59 AM) shows the highest number of users, suggesting that many individuals utilize bicycles for commuting to work or school during this time.
+  
+  2. **Peak Usage During Daytime**:  
+     There is a noticeable decline in the number of bicycle users during the "Afternoon" category (from 12:00 PM to 5:59 PM). This decrease may reflect that many people are indoors at work or engaged in other activities, leading to reduced bicycle usage.
+  
+  3. **Decrease in Usage During Evening and Night**:  
+     The "Evening" category (from 6:00 PM to 5:59 AM) also shows a lower number of users compared to the morning. This may indicate that fewer individuals opt for cycling during the late evening and nighttime hours, possibly due to safety concerns or reduced visibility.
+"""
+
+st.write(conclusions)
 
 all_df = pd.read_csv("main_data.csv")
 
