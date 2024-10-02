@@ -49,49 +49,46 @@ ax.set_xlabel("Hour")
 ax.set_ylabel("Bicycle Count")
 st.pyplot(fig)
 
-### 4. What are the trends in bicycle use throughout the year?
+### 4. What are the trends in bicycle use throughout the year??
 st.header("4. What are the trends in bicycle use throughout the year?")
 st.write("""
-Bicycle usage fluctuates throughout the year, with peaks during spring and fall, likely due to favorable weather conditions.
+This line plot shows the trends in bicycle usage across different months, comparing usage between two years (Year 0 and Year 1).
 """)
 fig, ax = plt.subplots()
-sns.lineplot(data=hour_df, x='mnth', y='cnt', ax=ax)
-ax.set_title("Monthly Bicycle Usage Trends")
+sns.lineplot(data=hour_df, x='mnth', y='cnt', hue='yr', ax=ax)
+ax.set_title("Monthly Bicycle Usage Trends by Year")
 ax.set_xlabel("Month")
-ax.set_ylabel("Bicycle Count")
+ax.set_ylabel("Number of Bicycle Users")
 st.pyplot(fig)
 
+
+### 5. What are the patterns of bicycle use throughout the day using manual grouping?
 ### 5. What are the patterns of bicycle use throughout the day using manual grouping?
 st.header("5. What are the patterns of bicycle use throughout the day using manual grouping?")
 st.write("""
-The manual grouping method is used to understand patterns of bicycle usage throughout the day by segmenting hours based on usage behavior.
+This bar plot shows bicycle usage based on different times of the day, grouped into Morning, Afternoon, and Night.
 """)
 
-# Assuming manual grouping has already been performed in the EDA, and you've grouped the data into categories
-# You can either have a column for 'group' in hour_df, or define the groupings here manually.
-
-# For example, assume you have groups like this (customize based on your manual grouping):
+# Manual grouping: Morning (6-12), Afternoon (12-18), and Night (other times)
 def manual_grouping(hour):
-    if 0 <= hour <= 6:
-        return 'Late Night'
-    elif 7 <= hour <= 10:
-        return 'Morning Rush'
-    elif 11 <= hour <= 16:
-        return 'Daytime'
-    elif 17 <= hour <= 19:
-        return 'Evening Rush'
+    if 6 <= hour < 12:
+        return 'Morning'
+    elif 12 <= hour < 18:
+        return 'Afternoon'
     else:
         return 'Night'
 
-hour_df['group'] = hour_df['hr'].apply(manual_grouping)
+# Apply manual grouping to the dataset
+hour_df['time_of_day'] = hour_df['hr'].apply(manual_grouping)
 
-# Visualize the manual grouping
+# Visualize the manual grouping with a bar plot
 fig, ax = plt.subplots()
-sns.scatterplot(data=hour_df, x='hr', y='cnt', hue='group', palette='Set1', ax=ax)
-ax.set_title("Bicycle Usage Patterns by Manual Grouping")
-ax.set_xlabel("Hour")
-ax.set_ylabel("Bicycle Count")
+sns.barplot(x='time_of_day', y='cnt', data=hour_df, estimator=sum, ci=None, ax=ax)
+ax.set_title("Bicycle Usage Based on Time of Day")
+ax.set_xlabel("Time of Day")
+ax.set_ylabel("Number of Bicycle Users")
 st.pyplot(fig)
+
 
 # Footer
 st.write("""
