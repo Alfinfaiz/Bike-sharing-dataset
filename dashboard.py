@@ -17,39 +17,34 @@ st.header("1. How do weather conditions affect bicycle use?")
 st.write("""
 Weather is one of the key factors influencing bicycle usage. This boxplot shows the distribution of bicycle usage across different weather conditions.
 """)
-# Mapping of weather conditions
+weather_avg = hour_df.groupby('weathersit')['cnt'].mean().reset_index()
+
+# Mapping kondisi cuaca
 weather_conditions = {
     1: 'Clear/Partly Cloudy',
     2: 'Mist/Cloudy',
     3: 'Light Snow/Rain',
     4: 'Heavy Rain/Snow'
 }
-# Replace numerical weather codes with descriptive labels
-hour_df['weathersit'] = hour_df['weathersit'].map(weather_conditions)
+weather_avg['weathersit'] = weather_avg['weathersit'].map(weather_conditions)
 
-# Calculate the average number of users for each weather condition
-weather_avg = hour_df.groupby('weathersit')['cnt'].mean().reset_index()
+# Mengatur urutan kategori
+weather_avg['weathersit'] = pd.Categorical(weather_avg['weathersit'], 
+                                            categories=['Clear/Partly Cloudy', 'Mist/Cloudy', 'Light Snow/Rain', 'Heavy Rain/Snow'],
+                                            ordered=True)
 
-# Create the Streamlit interface
-st.title('The Effect of Weather Conditions on Bicycle Use')
+# Membuat bar chart
+plt.figure(figsize=(10, 6))
+plt.bar(weather_avg['weathersit'], weather_avg['cnt'], color='skyblue')
 
-# Create a bar chart using Matplotlib
-fig, ax = plt.subplots(figsize=(10, 6))
-ax.bar(weather_avg['weathersit'], weather_avg['cnt'], color='skyblue')
+# Mengatur judul dan label
+plt.title('The Effect of Weather Conditions on Bicycle Use')
+plt.xlabel('Weather Conditions')
+plt.ylabel('Average Number of Bicycle Users')
 
-# Set titles and labels
-ax.set_title('The Effect of Weather Conditions on Bicycle Use')
-ax.set_xlabel('Weather Conditions')
-ax.set_ylabel('Average Number of Bicycle Users')
-
-# Rotate x-ticks for readability
+# Menampilkan plot
 plt.xticks(rotation=45)
-
-# Display the chart in Streamlit
-st.pyplot(fig)
-
-
-### 2. How does bicycle use vary between weekdays and weekends?
+plt.show()### 2. How does bicycle use vary between weekdays and weekends?
 st.header("2. How does bicycle use vary between weekdays and weekends?")
 st.write("""
 This bar plot shows the average number of bicycle users on weekdays compared to weekends. Weekdays are labeled as 1, and weekends as 0.
