@@ -44,7 +44,9 @@ plt.ylabel('Average Number of Bicycle Users')
 
 # Menampilkan plot
 plt.xticks(rotation=45)
-plt.show()### 2. How does bicycle use vary between weekdays and weekends?
+plt.show()
+
+### 2. How does bicycle use vary between weekdays and weekends?
 st.header("2. How does bicycle use vary between weekdays and weekends?")
 st.write("""
 This bar plot shows the average number of bicycle users on weekdays compared to weekends. Weekdays are labeled as 1, and weekends as 0.
