@@ -17,6 +17,7 @@ st.header("1. How do weather conditions affect bicycle use?")
 st.write("""
 Weather is one of the key factors influencing bicycle usage. This boxplot shows the distribution of bicycle usage across different weather conditions.
 """)
+# Menghitung rata-rata pengguna untuk setiap kondisi cuaca
 weather_avg = hour_df.groupby('weathersit')['cnt'].mean().reset_index()
 
 # Mapping kondisi cuaca
@@ -26,6 +27,7 @@ weather_conditions = {
     3: 'Light Snow/Rain',
     4: 'Heavy Rain/Snow'
 }
+# Mengganti kode cuaca dengan label deskriptif
 weather_avg['weathersit'] = weather_avg['weathersit'].map(weather_conditions)
 
 # Mengatur urutan kategori
@@ -42,9 +44,8 @@ plt.title('The Effect of Weather Conditions on Bicycle Use')
 plt.xlabel('Weather Conditions')
 plt.ylabel('Average Number of Bicycle Users')
 
-# Menampilkan plot
-plt.xticks(rotation=45)
-plt.show()
+# Menampilkan plot di Streamlit
+st.pyplot(plt)
 
 ### 2. How does bicycle use vary between weekdays and weekends?
 st.header("2. How does bicycle use vary between weekdays and weekends?")
