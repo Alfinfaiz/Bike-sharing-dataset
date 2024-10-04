@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 
 # Load the dataset
-hour_df = pd.read_csv('main_data.csv')
+hour_df = pd.read_csv('hour_clean.csv')
 
 # Set the title and description of the project
 st.title("Weather and Seasonal Influences on Bike Sharing: A Study Using the Capital Bikeshare Dataset")
@@ -17,12 +17,40 @@ st.header("1. How do weather conditions affect bicycle use?")
 st.write("""
 Weather is one of the key factors influencing bicycle usage. This boxplot shows the distribution of bicycle usage across different weather conditions.
 """)
-fig, ax = plt.subplots()
-sns.boxplot(data=hour_df, x='weathersit', y='cnt', ax=ax)
-ax.set_title("The Effect of Weather Conditions on Bicycle Use")
-ax.set_xlabel("Weather Conditions")
-ax.set_ylabel("Number of Bicycle Users")
+# Replace this with your actual data loading logic
+hour_df = pd.read_csv('hour.csv')  # Ensure the file path is correct
+
+# Mapping of weather conditions
+weather_conditions = {
+    1: 'Clear/Partly Cloudy',
+    2: 'Mist/Cloudy',
+    3: 'Light Snow/Rain',
+    4: 'Heavy Rain/Snow'
+}
+# Replace numerical weather codes with descriptive labels
+hour_df['weathersit'] = hour_df['weathersit'].map(weather_conditions)
+
+# Calculate the average number of users for each weather condition
+weather_avg = hour_df.groupby('weathersit')['cnt'].mean().reset_index()
+
+# Create the Streamlit interface
+st.title('The Effect of Weather Conditions on Bicycle Use')
+
+# Create a bar chart using Matplotlib
+fig, ax = plt.subplots(figsize=(10, 6))
+ax.bar(weather_avg['weathersit'], weather_avg['cnt'], color='skyblue')
+
+# Set titles and labels
+ax.set_title('The Effect of Weather Conditions on Bicycle Use')
+ax.set_xlabel('Weather Conditions')
+ax.set_ylabel('Average Number of Bicycle Users')
+
+# Rotate x-ticks for readability
+plt.xticks(rotation=45)
+
+# Display the chart in Streamlit
 st.pyplot(fig)
+
 
 ### 2. How does bicycle use vary between weekdays and weekends?
 st.header("2. How does bicycle use vary between weekdays and weekends?")
