@@ -17,9 +17,6 @@ st.header("1. How do weather conditions affect bicycle use?")
 st.write("""
 Weather is one of the key factors influencing bicycle usage. This boxplot shows the distribution of bicycle usage across different weather conditions.
 """)
-# Replace this with your actual data loading logic
-hour_df = pd.read_csv('hour.csv')  # Ensure the file path is correct
-
 # Mapping of weather conditions
 weather_conditions = {
     1: 'Clear/Partly Cloudy',
