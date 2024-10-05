@@ -90,13 +90,6 @@ plt.legend(title='Year', labels=new_labels)
 # Display the plot in Streamlit
 st.pyplot(plt)
 
-# Optional: Add a file uploader in Streamlit for dynamic file loading
-uploaded_file = st.file_uploader("Choose a CSV file", type="csv")
-if uploaded_file is not None:
-    # Load the data from the uploaded CSV
-    hour_df = pd.read_csv(uploaded_file)
-    st.write("Data preview:", hour_df.head())
-
 ### 5. What are the patterns of bicycle use throughout the day using manual grouping?
 st.header("5. What are the patterns of bicycle use throughout the day using manual grouping?")
 st.write("""
