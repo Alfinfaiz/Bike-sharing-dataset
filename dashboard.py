@@ -73,6 +73,10 @@ ax.set_ylabel("Bicycle Count")
 st.pyplot(fig)
 
 ### 4. What are the trends in bicycle use throughout the year??
+# Set the page layout for Streamlit
+st.title("Bicycle Usage Trends Throughout the Year")
+st.write("This plot shows bicycle usage trends by month, comparing data between 2011 and 2012.")
+
 plt.figure(figsize=(14, 6))
 sns.lineplot(x='mnth', y='cnt', hue='yr', data=hour_df, ci=None)
 plt.title('Trends in Bicycle Use Throughout the Year')
