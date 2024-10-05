@@ -73,16 +73,25 @@ ax.set_ylabel("Bicycle Count")
 st.pyplot(fig)
 
 ### 4. What are the trends in bicycle use throughout the year??
-st.header("4. What are the trends in bicycle use throughout the year?")
-st.write("""
-This line plot shows the trends in bicycle usage across different months, comparing usage between two years (Year 0 and Year 1).
-""")
-fig, ax = plt.subplots()
-sns.lineplot(data=hour_df, x='mnth', y='cnt', hue='yr', ax=ax)
-ax.set_title("Monthly Bicycle Usage Trends by Year")
-ax.set_xlabel("Month")
-ax.set_ylabel("Number of Bicycle Users")
-st.pyplot(fig)
+plt.figure(figsize=(14, 6))
+sns.lineplot(x='mnth', y='cnt', hue='yr', data=hour_df, ci=None)
+plt.title('Trends in Bicycle Use Throughout the Year')
+plt.xlabel('Month')
+plt.ylabel('Number of Bicycle Users')
+
+# Modify the legend to show actual years
+new_labels = ['2011', '2012']  # Map 0 to 2011 and 1 to 2012
+plt.legend(title='Year', labels=new_labels)
+
+# Display the plot in Streamlit
+st.pyplot(plt)
+
+# Optional: Add a file uploader in Streamlit for dynamic file loading
+uploaded_file = st.file_uploader("Choose a CSV file", type="csv")
+if uploaded_file is not None:
+    # Load the data from the uploaded CSV
+    hour_df = pd.read_csv(uploaded_file)
+    st.write("Data preview:", hour_df.head())
 
 ### 5. What are the patterns of bicycle use throughout the day using manual grouping?
 st.header("5. What are the patterns of bicycle use throughout the day using manual grouping?")
