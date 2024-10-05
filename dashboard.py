@@ -148,7 +148,15 @@ ax.ticklabel_format(style='sci', axis='y', scilimits=(6,6))
 # Display the plot
 st.pyplot(fig)
 
-# Conclusion for Question 5
+# Detailed conclusion for Question 5 with multiple points
 st.write("""
-- **Conclusion**: The "Morning" period (from 6:00 AM to 11:59 AM) shows the highest number of users, suggesting that many individuals utilize bicycles for commuting to work or school during this time. Usage tends to decrease in the afternoon and evening.
+- **Conclusion**:
+  1. **Bicycle Usage Patterns Throughout the Day**:  
+     The visualization indicates that bicycle usage varies significantly throughout the day. The "Morning" category (from 6:00 AM to 11:59 AM) shows the highest number of users, suggesting that many individuals utilize bicycles for commuting to work or school during this time.
+  
+  2. **Peak Usage During Daytime**:  
+     There is a noticeable decline in the number of bicycle users during the "Afternoon" category (from 12:00 PM to 5:59 PM). This decrease may reflect that many people are indoors at work or engaged in other activities, leading to reduced bicycle usage.
+  
+  3. **Decrease in Usage During Evening and Night**:  
+     The "Evening" category (from 6:00 PM to 5:59 AM) also shows a lower number of users compared to the morning. This may indicate that fewer individuals opt for cycling during the late evening and nighttime hours, possibly due to safety concerns or reduced visibility.
 """)
