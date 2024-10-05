@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 
 # Load the dataset
-hour_df = pd.read_csv('hour_clean.csv')
+hour_df = pd.read_csv('main_data.csv')
 
 # Set the title and description of the project
 st.title("Weather and Seasonal Influences on Bike Sharing: A Study Using the Capital Bikeshare Dataset")
