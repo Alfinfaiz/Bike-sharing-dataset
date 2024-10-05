@@ -17,39 +17,40 @@ st.header("1. How do weather conditions affect bicycle use?")
 st.write("""
 Weather is one of the key factors influencing bicycle usage. This boxplot shows the distribution of bicycle usage across different weather conditions.
 """)
-# Menghitung rata-rata pengguna untuk setiap kondisi cuaca
+
+# Calculate average users for each weather condition
 weather_avg = hour_df.groupby('weathersit')['cnt'].mean().reset_index()
 
-# Mapping kondisi cuaca
+# Map weather conditions
 weather_conditions = {
     1: 'Clear/Partly Cloudy',
     2: 'Mist/Cloudy',
     3: 'Light Snow/Rain',
     4: 'Heavy Rain/Snow'
 }
-# Mengganti kode cuaca dengan label deskriptif
 weather_avg['weathersit'] = weather_avg['weathersit'].map(weather_conditions)
 
-# Mengatur urutan kategori
+# Set category order
 weather_avg['weathersit'] = pd.Categorical(weather_avg['weathersit'], 
                                             categories=['Clear/Partly Cloudy', 'Mist/Cloudy', 'Light Snow/Rain', 'Heavy Rain/Snow'],
                                             ordered=True)
 
-# Membuat bar chart
+# Create bar chart
 plt.figure(figsize=(10, 6))
 plt.bar(weather_avg['weathersit'], weather_avg['cnt'], color='skyblue')
 
-# Mengatur judul dan label
+# Set title and labels
 plt.title('The Effect of Weather Conditions on Bicycle Use')
 plt.xlabel('Weather Conditions')
 plt.ylabel('Average Number of Bicycle Users')
 
-# Menampilkan plot di Streamlit
+# Display plot in Streamlit
 st.pyplot(plt)
 
-conclusions = """
-- **Question 1: How do weather conditions affect bicycle use?**  
-  The analysis results show that weather conditions significantly impact the number of bicycle users. The highest usage is recorded during clear weather and light mist, while usage drastically decreases during light to heavy rain. This highlights that good weather encourages more people to use bicycles.
+# Conclusion for Question 1
+st.write("""
+- **Conclusion**: The analysis results show that weather conditions significantly impact the number of bicycle users. The highest usage is recorded during clear weather and light mist, while usage drastically decreases during light to heavy rain. This highlights that good weather encourages more people to use bicycles.
+""")
 
 ### 2. How does bicycle use vary between weekdays and weekends?
 st.header("2. How does bicycle use vary between weekdays and weekends?")
@@ -62,6 +63,11 @@ ax.set_title("Bicycle Use Between Weekdays and Weekends")
 ax.set_xlabel("Weekdays (1) vs Weekends (0)")
 ax.set_ylabel("Number of Bicycle Users")
 st.pyplot(fig)
+
+# Conclusion for Question 2
+st.write("""
+- **Conclusion**: The analysis indicates a significant difference between bicycle usage on workdays and weekends. Usage tends to be higher on workdays compared to weekends, likely due to more registered users using bicycles for their regular commutes.
+""")
 
 ### 3. How does the behavior of casual and registered users differ?
 st.header("3. How does the behavior of casual and registered users differ?")
@@ -76,10 +82,16 @@ ax.set_xlabel("Hour")
 ax.set_ylabel("Bicycle Count")
 st.pyplot(fig)
 
+# Conclusion for Question 3
+st.write("""
+- **Conclusion**: Registered users demonstrate a more consistent usage pattern throughout the day compared to casual users. Casual users tend to use bicycles during specific times, particularly on weekends, suggesting that they prefer using bicycles for recreational purposes.
+""")
+
 ### 4. What are the trends in bicycle use throughout the year??
-# Set the page layout for Streamlit
-st.title("Bicycle Usage Trends Throughout the Year")
-st.write("This plot shows bicycle usage trends by month, comparing data between 2011 and 2012.")
+st.header("4. What are the trends in bicycle use throughout the year?")
+st.write("""
+This plot shows bicycle usage trends by month, comparing data between 2011 and 2012.
+""")
 
 plt.figure(figsize=(14, 6))
 sns.lineplot(x='mnth', y='cnt', hue='yr', data=hour_df, ci=None)
@@ -88,11 +100,16 @@ plt.xlabel('Month')
 plt.ylabel('Number of Bicycle Users')
 
 # Modify the legend to show actual years
-new_labels = ['2011', '2012']  # Map 0 to 2011 and 1 to 2012
+new_labels = ['2011', '2012']
 plt.legend(title='Year', labels=new_labels)
 
 # Display the plot in Streamlit
 st.pyplot(plt)
+
+# Conclusion for Question 4
+st.write("""
+- **Conclusion**: Monthly trend analysis shows fluctuations in bicycle usage throughout the year, with peaks occurring in specific months such as May and September. Conversely, lower usage is observed in January and February, likely due to colder weather conditions during those months. This indicates that weather factors influence users' preferences for cycling.
+""")
 
 ### 5. What are the patterns of bicycle use throughout the day using manual grouping?
 st.header("5. What are the patterns of bicycle use throughout the day using manual grouping?")
@@ -100,7 +117,7 @@ st.write("""
 This bar plot shows bicycle usage based on different times of the day, grouped into Morning, Afternoon, and Night.
 """)
 
-# Manual grouping: Morning (6-12), Afternoon (12-18), and Night (other times)
+# Manual grouping for time of day
 def manual_grouping(hour):
     if 6 <= hour < 12:
         return 'Morning'
@@ -109,80 +126,29 @@ def manual_grouping(hour):
     else:
         return 'Evening'
 
-# Apply manual grouping to the dataset
 hour_df['time_of_day'] = hour_df['hr'].apply(manual_grouping)
 
-# Define the specific order for the x-axis
+# Define the order for the x-axis
 time_order = ['Afternoon', 'Evening', 'Morning']
 
-# Visualize the manual grouping with a bar plot
-fig, ax = plt.subplots(figsize=(7, 5))  # Set figure size to match the provided plot
-sns.barplot(x='time_of_day', y='cnt', data=hour_df, estimator=sum, ci=None, ax=ax, color="lightblue", order=time_order)  # Set the specific order and color
+# Create a bar plot
+fig, ax = plt.subplots(figsize=(7, 5))
+sns.barplot(x='time_of_day', y='cnt', data=hour_df, estimator=sum, ci=None, ax=ax, color="lightblue", order=time_order)
 
 ax.set_title("Bicycle Usage Based on Time of Day", fontsize=14)
 ax.set_xlabel("Time of Day", fontsize=12)
 ax.set_ylabel("Number of Bicycle Users", fontsize=12)
 
-# Rotate the x-axis labels to match the image
+# Rotate x-axis labels
 ax.set_xticklabels(ax.get_xticklabels(), rotation=45, ha="right")
 
-# Adjust y-axis format to show numbers in scientific notation (1e6)
+# Adjust y-axis format
 ax.ticklabel_format(style='sci', axis='y', scilimits=(6,6))
 
 # Display the plot
 st.pyplot(fig)
 
-# Footer
-st.header("Conclusion")
-
-conclusions = """
-- **Question 1: How do weather conditions affect bicycle use?**  
-  The analysis results show that weather conditions significantly impact the number of bicycle users. The highest usage is recorded during clear weather and light mist, while usage drastically decreases during light to heavy rain. This highlights that good weather encourages more people to use bicycles.
-
-- **Question 2: How does bicycle use vary between weekdays and weekends?**  
-  The analysis indicates a significant difference between bicycle usage on workdays and weekends. Usage tends to be higher on workdays compared to weekends, likely due to more registered users using bicycles for their regular commutes.
-
-- **Question 3: How does the behavior of casual and registered users differ?**  
-  Registered users demonstrate a more consistent usage pattern throughout the day compared to casual users. Casual users tend to use bicycles during specific times, particularly on weekends, suggesting that they prefer using bicycles for recreational purposes.
-
-- **Question 4: What are the trends in bicycle use throughout the year?**  
-  Monthly trend analysis shows fluctuations in bicycle usage throughout the year, with peaks occurring in specific months such as May and September. Conversely, lower usage is observed in January and February, likely due to colder weather conditions during those months. This indicates that weather factors influence users' preferences for cycling.
-
-- **Question 5: What are the patterns of bicycle use throughout the day?**  
-  1. **Bicycle Usage Patterns Throughout the Day**:  
-     The visualization indicates that bicycle usage varies significantly throughout the day. The "Morning" category (from 6:00 AM to 11:59 AM) shows the highest number of users, suggesting that many individuals utilize bicycles for commuting to work or school during this time.
-  
-  2. **Peak Usage During Daytime**:  
-     There is a noticeable decline in the number of bicycle users during the "Afternoon" category (from 12:00 PM to 5:59 PM). This decrease may reflect that many people are indoors at work or engaged in other activities, leading to reduced bicycle usage.
-  
-  3. **Decrease in Usage During Evening and Night**:  
-     The "Evening" category (from 6:00 PM to 5:59 AM) also shows a lower number of users compared to the morning. This may indicate that fewer individuals opt for cycling during the late evening and nighttime hours, possibly due to safety concerns or reduced visibility.
-"""
-
-st.write(conclusions)
-
-all_df = pd.read_csv("main_data.csv")
-
-# Mengonversi kolom 'dteday' ke format datetime
-all_df["dteday"] = pd.to_datetime(all_df["dteday"])
-
-# Mengurutkan berdasarkan kolom 'dteday'
-all_df.sort_values(by="dteday", inplace=True)
-
-# Reset indeks setelah pengurutan
-all_df.reset_index(inplace=True, drop=True)
-
-# Mendapatkan tanggal minimum dan maksimum dari kolom 'dteday'
-min_date = all_df["dteday"].min()
-max_date = all_df["dteday"].max()
- 
-with st.sidebar:
-    # Menambahkan logo perusahaan
-    st.image("https://github.com/Alfinfaiz/Bike-sharing-dataset/blob/main/istockphoto-979064894-170667a.jpg?raw=true")
-    
-    # Mengambil start_date & end_date dari date_input menggunakan 'dteday'
-    start_date, end_date = st.date_input(
-        label='Rentang Waktu', min_value=min_date,
-        max_value=max_date,
-        value=[min_date, max_date]
-    )
+# Conclusion for Question 5
+st.write("""
+- **Conclusion**: The "Morning" period (from 6:00 AM to 11:59 AM) shows the highest number of users, suggesting that many individuals utilize bicycles for commuting to work or school during this time. Usage tends to decrease in the afternoon and evening.
+""")
