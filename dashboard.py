@@ -47,6 +47,10 @@ plt.ylabel('Average Number of Bicycle Users')
 # Menampilkan plot di Streamlit
 st.pyplot(plt)
 
+conclusions = """
+- **Question 1: How do weather conditions affect bicycle use?**  
+  The analysis results show that weather conditions significantly impact the number of bicycle users. The highest usage is recorded during clear weather and light mist, while usage drastically decreases during light to heavy rain. This highlights that good weather encourages more people to use bicycles.
+
 ### 2. How does bicycle use vary between weekdays and weekends?
 st.header("2. How does bicycle use vary between weekdays and weekends?")
 st.write("""
