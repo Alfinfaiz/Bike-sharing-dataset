@@ -12,6 +12,30 @@ st.write("""
 The purpose of this project is to analyze bike rental patterns from the Capital Bikeshare system in Washington D.C. and understand how environmental factors such as weather conditions, temperature, and seasonality affect the number of bicycle users.
 """)
 
+### Sidebar for image and date range selection
+with st.sidebar:
+    # Add image with a caption in the sidebar
+    st.image("https://github.com/Alfinfaiz/Bike-sharing-dataset/blob/main/istockphoto-979064894-170667a.jpg?raw=true", 
+             caption="Rentang Waktu", use_column_width=True)
+    
+    # Loading all dataset again to get the date range
+    all_df = pd.read_csv("main_data.csv")
+    
+    # Convert 'dteday' to datetime format
+    all_df["dteday"] = pd.to_datetime(all_df["dteday"])
+    
+    # Get the minimum and maximum date from 'dteday' column
+    min_date = all_df["dteday"].min()
+    max_date = all_df["dteday"].max()
+    
+    # Add a date range picker
+    start_date, end_date = st.date_input(
+        label='Rentang Waktu', 
+        min_value=min_date,
+        max_value=max_date,
+        value=[min_date, max_date]
+    )
+
 ### 1. How do weather conditions affect bicycle use?
 st.header("1. How do weather conditions affect bicycle use?")
 st.write("""
@@ -148,7 +172,7 @@ ax.ticklabel_format(style='sci', axis='y', scilimits=(6,6))
 # Display the plot
 st.pyplot(fig)
 
-# Detailed conclusion for Question 5 with multiple points
+# Conclusion for Question 5 with multiple points
 st.write("""
 - **Conclusion**:
   1. **Bicycle Usage Patterns Throughout the Day**:  
